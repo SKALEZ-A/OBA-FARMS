@@ -1,26 +1,232 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Color palette from the specification */
+  --leaf-900:  #14231B;
+  --leaf-700:  #1E5631;
+  --leaf-100:  #DCE9DE;
+
+  --palm-600:  #BE3A11;
+  --palm-100:  #FBE4D8;
+
+  --husk-200:  #F0E6D2;
+  --husk-400:  #D8C7A4;
+
+  --paper:     #FFFDF8;
+  --white:     #FFFFFF;
+
+  --stock-ok:  #2F9E44;
+  --stock-low: #B58900;
+  --stock-out: #8A8A85;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-leaf-900: var(--leaf-900);
+  --color-leaf-700: var(--leaf-700);
+  --color-leaf-100: var(--leaf-100);
+  --color-palm-600: var(--palm-600);
+  --color-palm-100: var(--palm-100);
+  --color-husk-200: var(--husk-200);
+  --color-husk-400: var(--husk-400);
+  --color-paper: var(--paper);
+  --color-white: var(--white);
+  --color-stock-ok: var(--stock-ok);
+  --color-stock-low: var(--stock-low);
+  --color-stock-out: var(--stock-out);
+  
+  --font-display: var(--font-bricolage);
+  --font-body: var(--font-public-sans);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--leaf-900);
+  font-family: var(--font-body), -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Professional Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.4s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* Staggered animations for grids */
+.grid-item {
+  animation: fadeInUp 0.4s ease-out backwards;
+}
+
+.grid-item:nth-child(1) { animation-delay: 0ms; }
+.grid-item:nth-child(2) { animation-delay: 50ms; }
+.grid-item:nth-child(3) { animation-delay: 100ms; }
+.grid-item:nth-child(4) { animation-delay: 150ms; }
+.grid-item:nth-child(5) { animation-delay: 200ms; }
+.grid-item:nth-child(6) { animation-delay: 250ms; }
+.grid-item:nth-child(7) { animation-delay: 300ms; }
+.grid-item:nth-child(8) { animation-delay: 350ms; }
+
+/* Smooth hover transitions */
+.hover-lift {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(20, 35, 27, 0.12);
+}
+
+/* Button press effect */
+.button-press:active {
+  transform: scale(0.98);
+}
+
+/* Cart badge animation */
+@keyframes badgePop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cart-badge-pop {
+  animation: badgePop 0.2s ease-out;
+}
+
+/* Loading spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .hover-lift:hover {
+    transform: none;
+  }
+  
+  .button-press:active {
+    transform: none;
+  }
+}
+
+/* Accessibility utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (forced-colors: active) {
+  .sr-only {
+    clip: auto;
+  }
 }
